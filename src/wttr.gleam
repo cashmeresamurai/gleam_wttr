@@ -1,14 +1,29 @@
+import argv
+import cli
+import clip
+import clip/help
 import gleam/http/request
-import gleam/http/response
 import gleam/httpc
 import gleam/io
 import gleam/result
 import gleam/string
-import gleam/string_tree
-import gleeunit/should
 
 pub fn main() {
-  io.println("Hello from wttr!")
+  let parse =
+    cli.command()
+    |> clip.help(help.simple("city", "the city you want to query"))
+    |> clip.run(argv.load().arguments)
+
+  case parse {
+    Ok(city) -> {
+      let weather = get_wttr(city)
+      case weather {
+        Ok(s) -> s |> io.println
+        Error(_) -> io.println("wttr.in is currently not available")
+      }
+    }
+    Error(e) -> e |> io.println_error
+  }
 }
 
 pub fn get_wttr(city: String) -> Result(String, Nil) {

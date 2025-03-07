@@ -2,6 +2,7 @@
 # You typically do not need to edit this file
 
 packages = [
+  { name = "argv", version = "1.0.2", build_tools = ["gleam"], requirements = [], otp_app = "argv", source = "hex", outer_checksum = "BA1FF0929525DEBA1CE67256E5ADF77A7CDDFE729E3E3F57A5BDCAA031DED09D" },
   { name = "clip", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "clip", source = "hex", outer_checksum = "669BEA23D067F89B274A0E869533D2EC7C0DB1B5E650A03439C4558749945E94" },
   { name = "gleam_erlang", version = "0.34.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_erlang", source = "hex", outer_checksum = "0C38F2A128BAA0CEF17C3000BD2097EB80634E239CE31A86400C4416A5D0FDCC" },
   { name = "gleam_http", version = "4.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_http", source = "hex", outer_checksum = "0A62451FC85B98062E0907659D92E6A89F5F3C0FBE4AB8046C99936BF6F91DBC" },
@@ -11,6 +12,7 @@ packages = [
 ]
 
 [requirements]
+argv = { version = ">= 1.0.2 and < 2.0.0" }
 clip = { version = ">= 1.0.0 and < 2.0.0" }
 gleam_httpc = { version = ">= 4.1.0 and < 5.0.0" }
 gleam_stdlib = { version = ">= 0.44.0 and < 2.0.0" }
