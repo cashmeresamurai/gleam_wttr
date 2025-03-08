@@ -5,7 +5,6 @@ import clip/help
 import gleam/http/request
 import gleam/httpc
 import gleam/io
-import gleam/json
 import gleam/string
 
 pub fn main() {
@@ -26,10 +25,6 @@ pub fn main() {
   }
 }
 
-type Weather {
-  Weather(emoji: String, degree: String)
-}
-
 pub fn get_wttr(city: String) -> Result(String, Nil) {
   // encode % (percent sign) as %25
   let assert Ok(base_request) =
@@ -40,26 +35,10 @@ pub fn get_wttr(city: String) -> Result(String, Nil) {
   case response {
     Ok(r) -> {
       case string.split(r.body, on: "  ") {
-        [emoji, degree, ..] -> Ok(filter_output(Weather(emoji, degree)))
-
+        [emoji, degree, ..] -> Ok(string.join([emoji, degree], with: " "))
         _ -> Error(Nil)
       }
     }
     Error(_) -> Error(Nil)
   }
-}
-
-fn filter_output(weather_input: Weather) -> String {
-  json.object([
-    #(
-      "text",
-      json.string(string.join(
-        [weather_input.emoji, weather_input.degree],
-        with: "",
-      )),
-    ),
-  ])
-  |> json.to_string
-  |> string.split(":")
-  |> string.join(": ")
 }
