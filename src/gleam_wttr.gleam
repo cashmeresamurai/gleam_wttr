@@ -50,8 +50,16 @@ pub fn get_wttr(city: String) -> Result(String, Nil) {
 }
 
 fn filter_output(weather_input: Weather) -> String {
-  string.join(
-    ["{'text': '", weather_input.emoji, weather_input.degree, "'}"],
-    with: "",
-  )
+  json.object([
+    #(
+      "text",
+      json.string(string.join(
+        [weather_input.emoji, weather_input.degree],
+        with: "",
+      )),
+    ),
+  ])
+  |> json.to_string
+  |> string.split(":")
+  |> string.join(": ")
 }
